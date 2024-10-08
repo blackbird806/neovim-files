@@ -9,6 +9,14 @@ set.undofile = true
 -- Decrease update time
 vim.opt.updatetime = 250
 
+-- https://www.reddit.com/r/neovim/comments/1abd2cq/comment/kjo7moz/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+vim.api.nvim_create_autocmd('BufReadPost', {
+  desc = 'Open file at the last position it was edited earlier',
+  group = misc_augroup,
+  pattern = '*',
+  command = 'silent! normal! g`"zv'
+})
+	
 -- C++ modules files are c++
 vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
 	pattern = "*.ixx",
@@ -105,6 +113,11 @@ plugins = {
 	},
 	{
 		"https://github.com/dstein64/vim-startuptime"
+	},
+	{
+		"https://github.com/akinsho/toggleterm.nvim",
+		version = "*",
+		config = true
 	},
 	-- LSP Plugins
 	{
@@ -568,4 +581,6 @@ local xmake_component = {
 		vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 		vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
-
+require("toggleterm").setup{
+  open_mapping = [[<c-\>]],
+}
