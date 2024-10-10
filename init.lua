@@ -581,6 +581,8 @@ local xmake_component = {
 		vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 		vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
+
 require("toggleterm").setup{
   open_mapping = [[<c-\>]],
+  shell = "powershell.exe"
 }
