@@ -9,14 +9,21 @@ set.undofile = true
 -- Decrease update time
 vim.opt.updatetime = 250
 
+-- Minimal number of screen lines to keep above and below the cursor.
+vim.opt.scrolloff = 10
+
+-- Clear highlights on search when pressing <Esc> in normal mode
+--  See `:help hlsearch`
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
 -- https://www.reddit.com/r/neovim/comments/1abd2cq/comment/kjo7moz/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 vim.api.nvim_create_autocmd('BufReadPost', {
-  desc = 'Open file at the last position it was edited earlier',
-  group = misc_augroup,
-  pattern = '*',
-  command = 'silent! normal! g`"zv'
+	desc = 'Open file at the last position it was edited earlier',
+	group = misc_augroup,
+	pattern = '*',
+	command = 'silent! normal! g`"zv'
 })
-	
+
 -- C++ modules files are c++
 vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
 	pattern = "*.ixx",
@@ -72,26 +79,26 @@ plugins = {
 			-- your configuration comes here
 			-- or leave it empty to use the default settings
 			-- refer to the configuration section below
-  highlight = {
-    multiline = true, -- enable multine todo comments
-    multiline_pattern = "^.", -- lua pattern to match the next multiline from the start of the matched keyword
-    multiline_context = 10, -- extra lines that will be re-evaluated when changing a line
-    before = "", -- "fg" or "bg" or empty
-    keyword = "wide", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
-    after = "fg", -- "fg" or "bg" or empty
-    pattern = [[.*<(KEYWORDS)\s*]], -- pattern or table of patterns, used for highlighting (vim regex)
-    comments_only = true, -- uses treesitter to match keywords in comments only
-    max_line_len = 400, -- ignore lines longer than this
-    exclude = {}, -- list of file types to exclude highlighting
-  },
+			highlight = {
+				multiline = true, -- enable multine todo comments
+				multiline_pattern = "^.", -- lua pattern to match the next multiline from the start of the matched keyword
+				multiline_context = 10, -- extra lines that will be re-evaluated when changing a line
+				before = "", -- "fg" or "bg" or empty
+				keyword = "wide", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
+				after = "fg", -- "fg" or "bg" or empty
+				pattern = [[.*<(KEYWORDS)\s*]], -- pattern or table of patterns, used for highlighting (vim regex)
+				comments_only = true, -- uses treesitter to match keywords in comments only
+				max_line_len = 400, -- ignore lines longer than this
+				exclude = {}, -- list of file types to exclude highlighting
+			},
 			search = {
 				args = {
-				"--color=never",
-				"--no-heading",
-				"--with-filename",
-				"--line-number",
-				"--column",
-		    },
+					"--color=never",
+					"--no-heading",
+					"--with-filename",
+					"--line-number",
+					"--column",
+				},
 				pattern = [[.*(KEYWORDS)]]
 			}
 		}
@@ -118,6 +125,11 @@ plugins = {
 		"https://github.com/akinsho/toggleterm.nvim",
 		version = "*",
 		config = true
+	},
+	{
+		"m4xshen/hardtime.nvim",
+		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+		opts = {}
 	},
 	-- LSP Plugins
 	{
@@ -462,11 +474,11 @@ plugins = {
 				end,
 			},
 			{
-			    "Mythos-404/xmake.nvim",
-			    lazy = true,
-			    event = "BufReadPost xmake.lua",
-			    config = true,
-			    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+				"Mythos-404/xmake.nvim",
+				lazy = true,
+				event = "BufReadPost xmake.lua",
+				config = true,
+				dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
 			},
 		} -- plugins end
 		require("lazy").setup(plugins, opts)
@@ -507,28 +519,28 @@ plugins = {
 		hi WhichKeyFloat ctermbg=BLACK ctermfg=BLACK
 		]])
 
-local xmake_component = {
-    function()
-        local xmake = require("xmake.project").info
-        if xmake.target.tg == "" then
-            return ""
-        end
-        return xmake.target.tg .. "(" .. xmake.mode .. ")"
-    end,
+		local xmake_component = {
+			function()
+				local xmake = require("xmake.project").info
+				if xmake.target.tg == "" then
+					return ""
+				end
+				return xmake.target.tg .. "(" .. xmake.mode .. ")"
+			end,
 
-    cond = function()
-        return vim.o.columns > 100
-    end,
+			cond = function()
+				return vim.o.columns > 100
+			end,
 
-    on_click = function()
-        require("xmake.project._menu").init() -- Add the on-click ui
-    end,
-}
+			on_click = function()
+				require("xmake.project._menu").init() -- Add the on-click ui
+			end,
+		}
 
 		require('lualine').setup {
 			options = {
 				icons_enabled = true,
-				theme = 'ayu_mirage', 
+				theme = 'ayu_mirage',
 				component_separators = { left = '', right = ''},
 				section_separators = { left = '', right = ''},
 				disabled_filetypes = {
@@ -582,7 +594,9 @@ local xmake_component = {
 		vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
 
-require("toggleterm").setup{
-  open_mapping = [[<c-\>]],
-  shell = "powershell.exe"
-}
+		require("toggleterm").setup{
+			open_mapping = [[<c-\>]],
+			shell = "powershell.exe"
+		}
+
+		require("hardtime").setup()
