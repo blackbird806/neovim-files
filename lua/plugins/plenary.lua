@@ -1,1 +1,1 @@
-return { "nvim-lua/plenary.vim" }
+return { "nvim-lua/plenary.nvim" }
