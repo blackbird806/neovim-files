@@ -14,9 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 --
 
 plugins = {
-	require("plugins.autocomplete"),
 	require("plugins.catppucin"),
-	require("plugins.lspconfig"),
 	require("plugins.lualine"),
 	require("plugins.plenary"),
 	require("plugins.telescope"),
@@ -28,12 +26,8 @@ plugins = {
 	require("plugins.luvit-meta"),
 	require("plugins.nvim-cmp"),
 	require("plugins.toggleterm"),
-	require("plugins.c3"),
-	require("plugins.aoe2-rms"),
 	require("plugins.vim-startuptime"),
 	require("plugins.nvim-comment"),
-
-	require("my_plugins.mason-workaround"),
 }
 
 require("lazy").setup(plugins, opts)

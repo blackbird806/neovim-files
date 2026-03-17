@@ -6,11 +6,11 @@ require("plugins")
 vim.cmd("TSEnable highlight")
 vim.cmd.colorscheme "catppuccin"
 
-		--local builtin = require('telescope.builtin')
-		--vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-		--vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-		--vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-		--vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+		local builtin = require('telescope.builtin')
+		vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+		vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+		vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+		vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 		local wk = require("which-key")
 		wk.add({
 			{ "<leader>f", group = "file" }, -- group
@@ -109,14 +109,6 @@ vim.cmd.colorscheme "catppuccin"
 		extensions = {}
 	}
 
-	--require('lualine').setup()
-
-	require'lspconfig'.serve_d.setup({
-		--	d.dcdClientPath = "D:/dev/dcd",
-		--	d.dcdServerPath = "D:/dev/dcd"
-	})
-
-
 	-- Global mappings.
 	-- See `:help vim.diagnostic.*` for documentation on any of the below functions
 	vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
@@ -124,21 +116,10 @@ vim.cmd.colorscheme "catppuccin"
 	vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 	vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
-
 	require("toggleterm").setup{
 		open_mapping = [[<c-\>]],
 		shell = "powershell.exe"
 	}
-
-	-- Disabe inline warings/errors
-	-- see https://neovim.io/doc/user/diagnostic.html#vim.diagnostic.Opts
-	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-		vim.lsp.diagnostic.on_publish_diagnostics, {
-			virtual_text = false,
-			signs = false,
-			underline = false,
-		}
-	)
 
 	require('nvim_comment').setup()
 
