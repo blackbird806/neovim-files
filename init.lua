@@ -38,12 +38,11 @@ vim.cmd.colorscheme "catppuccin"
 		defaults = { 
 			mappings = {
 				i = {
-					["<CR>"] = actions.select_tab,
+					["<CR>"] = actions.select_default,
 				}
 			}
 		}
 	}
-	require('telescope').setup()
 
 	-- good colors on wk, see: https://github.com/folke/which-key.nvim/issues/52#issuecomment-832570589
 	vim.cmd([[
@@ -130,10 +129,10 @@ vim.cmd.colorscheme "catppuccin"
 		shell = "powershell.exe"
 	}
 
-	-- Disabe inline warings/errors
-	-- see https://neovim.io/doc/user/diagnostic.html#vim.diagnostic.Opts
+	-- Disable inline warnings/errors
+	-- see https://neovim.io/doc/user/diagnostic.html
 	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-		vim.lsp.diagnostic.on_publish_diagnostics, {
+		vim.lsp.handlers["textDocument/publishDiagnostics"], {
 			virtual_text = false,
 			signs = false,
 			underline = false,
